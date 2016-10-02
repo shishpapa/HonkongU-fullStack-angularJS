@@ -98,4 +98,10 @@ angular.module('confusionApp')
         $scope.leaders = corporateFactory.getLeaders();
     }])
 
+    .controller('IndexController', ['$scope','corporateFactory', 'menuFactory' , function($scope, corporateFactory, menuFactory){
+        $scope.leader = corporateFactory.getLeader(3);
+        $scope.dish = menuFactory.getDish(0);
+        $scope.promotion = menuFactory.getPromotion(0);
+    }])
+
 ;
