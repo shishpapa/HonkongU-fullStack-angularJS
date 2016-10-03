@@ -203,7 +203,7 @@ angular.module('confusionApp')
             return promotions.filter(function(promotion) {
                 return promotion._id === id;
             })[0];
-        }
+        };
 
     })
 
