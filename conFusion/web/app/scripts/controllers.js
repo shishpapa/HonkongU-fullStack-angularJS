@@ -78,7 +78,6 @@ angular.module('confusionApp')
     }])
 
     .controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', function ($scope, $stateParams, menuFactory) {
-        $scope.dish = {};
         $scope.showDish = false;
         $scope.message="Loading ...";
         $scope.dish = menuFactory.getDishes().get({id:parseInt($stateParams.id,10)})
@@ -110,13 +109,23 @@ angular.module('confusionApp')
 
     // implement the IndexController and About Controller here
     .controller('AboutController', ['$scope', 'corporateFactory', function ($scope, corporateFactory) {
-        $scope.leaders = corporateFactory.getLeaders();
+        $scope.leaders = corporateFactory.query();
     }])
 
     .controller('IndexController', ['$scope', 'corporateFactory', 'menuFactory', function ($scope, corporateFactory, menuFactory) {
-        $scope.leader = corporateFactory.getLeader(3);
         $scope.showDish = false;
         $scope.message="Loading ...";
+
+        $scope.leader = corporateFactory.get({id:3})
+            .$promise.then(
+                function(response){
+                    $scope.leader = response;
+                },
+                function(response) {
+                    $scope.message = "Error: "+ response.status + " " + response.statusText;
+                }
+            );
+
         $scope.dish = menuFactory.getDishes().get({id:0})
             .$promise.then(
                 function(response){
@@ -124,16 +133,17 @@ angular.module('confusionApp')
                     $scope.showDish = true;
                 },
                 function(response) {
-                    $scope.message = "Error: "+response.status + " " + response.statusText;
+                    $scope.message = "Error: "+ response.status + " " + response.statusText;
                 }
             );
+
         $scope.promotion = menuFactory.getPromotion().get({id:0})
             .$promise.then(
                 function(response){
                     $scope.promotion = response;
                 },
                 function(response) {
-                    $scope.message = "Error: "+response.status + " " + response.statusText;
+                    $scope.message = "Error: "+ response.status + " " + response.statusText;
                 }
             );
     }])
