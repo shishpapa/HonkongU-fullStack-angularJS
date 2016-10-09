@@ -57,7 +57,7 @@ angular.module('confusionApp')
 
     }])
 
-    .controller('FeedbackController', ['$scope', function ($scope) {
+    .controller('FeedbackController', ['$scope', 'feedbackFactory',function ($scope, feedbackFactory) {
 
         $scope.sendFeedback = function () {
 
@@ -69,6 +69,7 @@ angular.module('confusionApp')
             }
             else {
                 $scope.invalidChannelSelection = false;
+                feedbackFactory.save($scope.feedback);
                 $scope.feedback = {mychannel: "", firstName: "", lastName: "", agree: false, email: ""};
                 $scope.feedback.mychannel = "";
                 $scope.feedbackForm.$setPristine();
@@ -101,7 +102,7 @@ angular.module('confusionApp')
             console.log($scope.comment);
             $scope.dish.comments.push($scope.comment);
 
-            menuFactory.getDishes().update({id:$scope.dish.id},$scope.dish);
+            menuFactory.getDishes().update({id:$scope.dish.id}, $scope.dish);
             $scope.commentForm.$setPristine();
             $scope.comment = {rating:5, comment:"", author:"", date:""};
         };

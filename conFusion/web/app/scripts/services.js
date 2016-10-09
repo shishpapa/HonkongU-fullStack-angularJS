@@ -20,4 +20,8 @@ angular.module('confusionApp')
         return $resource(baseURL+"leadership/:id",{id:'@id'});
     }])
 
+    .factory('feedbackFactory', ['$resource', 'baseURL', function ($resource, baseURL) {
+        return $resource(baseURL+"feedback/:id",null ,  {'update':{method:'PUT' }});
+    }])
+
 ;
