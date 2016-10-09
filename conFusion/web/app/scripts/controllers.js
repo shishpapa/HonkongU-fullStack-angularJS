@@ -109,7 +109,18 @@ angular.module('confusionApp')
 
     // implement the IndexController and About Controller here
     .controller('AboutController', ['$scope', 'corporateFactory', function ($scope, corporateFactory) {
-        $scope.leaders = corporateFactory.query();
+        $scope.message="Loading ...";
+        $scope.showLeadership = false;
+        $scope.leaders = corporateFactory.query()
+            .$promise.then(
+                function(response){
+                    $scope.leaders = response;
+                    $scope.showLeadership = true;
+                },
+                function(response) {
+                    $scope.message = "Error: "+ response.status + " " + response.statusText;
+                }
+            );
     }])
 
     .controller('IndexController', ['$scope', 'corporateFactory', 'menuFactory', function ($scope, corporateFactory, menuFactory) {
