@@ -114,12 +114,15 @@ angular.module('confusionApp')
 
     .controller('IndexController', ['$scope', 'corporateFactory', 'menuFactory', function ($scope, corporateFactory, menuFactory) {
         $scope.showDish = false;
+        $scope.showPromotion = false;
+        $scope.showLeadership = false;
         $scope.message="Loading ...";
 
         $scope.leader = corporateFactory.get({id:3})
             .$promise.then(
                 function(response){
                     $scope.leader = response;
+                    $scope.showLeadership = true;
                 },
                 function(response) {
                     $scope.message = "Error: "+ response.status + " " + response.statusText;
@@ -141,6 +144,7 @@ angular.module('confusionApp')
             .$promise.then(
                 function(response){
                     $scope.promotion = response;
+                    $scope.showPromotion = true;
                 },
                 function(response) {
                     $scope.message = "Error: "+ response.status + " " + response.statusText;
